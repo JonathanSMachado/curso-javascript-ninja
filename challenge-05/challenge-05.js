@@ -4,15 +4,23 @@ Crie uma variável qualquer, que receba um array com alguns valores aleatórios
 */
 // ?
 
+var arr = [1, 'Jonathan', true, [1,2], {prop: 'teste'}]
+
 /*
 Crie uma função que receba um array como parâmetro, e retorne esse array.
 */
 // ?
 
+function returnArr(arr) {
+    return arr
+}
+
 /*
 Imprima o segundo índice do array retornado pela função criada acima.
 */
 // ?
+
+console.log(returnArr(arr)[1])
 
 /*
 Crie uma função que receba dois parâmetros: o primeiro, um array de valores; e o
@@ -22,16 +30,24 @@ segundo parâmetro.
 */
 // ?
 
+function returnElem(arr, index) {
+    return index ?  arr[index] : arr
+}
+
 /*
 Declare uma variável que recebe um array com 5 valores, de tipos diferentes.
 */
 // ?
+
+var arr_2 = [true, 1, 'Jonathan', {prop: 'prop'}, [1,2]]
 
 /*
 Invoque a função criada acima, fazendo-a retornar todos os valores do último
 array criado.
 */
 // ?
+
+console.log(returnElem(arr_2))
 
 /*
 Crie uma função chamada `book`, que recebe um parâmetro, que será o nome do
@@ -49,10 +65,33 @@ os livros.
 */
 // ?
 
+function book(livro) {
+    var obj = {
+        'Livro1' : {
+            'quantidadePaginas': 200,
+            'autor': 'sei lá',
+            'editora': 'editora_1'
+        },
+        'Livro2' : {
+            'quantidadePaginas': 300,
+            'autor': 'outro',
+            'editora': 'editora_2'
+        },
+        'Livro3' : {
+            'quantidadePaginas': 100,
+            'autor': 'mais um',
+            'editora': 'editora_3'
+        }
+    }
+
+    return livro ? obj[livro] : obj
+}
 /*
 Usando a função criada acima, imprima o objeto com todos os livros.
 */
 // ?
+
+console.log(book())
 
 /*
 Ainda com a função acima, imprima a quantidade de páginas de um livro qualquer,
@@ -61,6 +100,7 @@ usando a frase:
 */
 // ?
 
+console.log('O livro Livro2 tem ' + book('Livro2').quantidadePaginas + 'páginas')
 /*
 Ainda com a função acima, imprima o nome do autor de um livro qualquer, usando
 a frase:
@@ -68,9 +108,13 @@ a frase:
 */
 // ?
 
+console.log('O autor do livro Livro3 é ' + book('Livro3').autor)
+
 /*
 Ainda com a função acima, imprima o nome da editora de um livro qualquer, usando
 a frase:
 "O livro [NOME_DO_LIVRO] foi publicado pela editora [NOME_DA_EDITORA]."
 */
 // ?
+
+console.log('O livro Livro1 foi publicado pela editora ' + book('Livro1').editora)
