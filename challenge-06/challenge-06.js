@@ -6,6 +6,9 @@ e imprima o nome desse campeonato no console.
 */
 // ?
 
+var championship = 'Campeonato Brasileiro'
+console.log(championship)
+
 /*
 Declare uma variável chamada `teams`, que receberá um array com 5 elementos.
 Os elementos serão nomes de times do campeonato escolhido, e os nomes devem
@@ -14,7 +17,8 @@ desafio.
 */
 // ?
 
-console.log( 'Times que estão participando do campeonato:', teams );
+var teams = ['Gremio', 'Inter']
+console.log( 'Times que estão participando do campeonato:', teams )
 
 /*
 Crie uma função chamada `showTeamPosition` com as seguintes características:
