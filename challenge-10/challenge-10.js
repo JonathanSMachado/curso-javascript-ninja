@@ -60,13 +60,16 @@
 	os dois parâmetros da função de retorno de "calculator".
 	*/
   function calculator(operator) {
-    if(!isOperatorValid(operator)) {return false}
+    if(!isOperatorValid(operator)) {
+      return false
+    }
 
     return function(num1, num2) {
-      if(typeof num1 === 'number' && typeof num2 === 'number') {return operation[operator](num1, num2)}
+      if(typeof num1 !== 'number' || typeof num2 !== 'number') {
+        return false
+      }
 
-      return false
-
+      return operation[operator](num1, num2)
 
     }
   }
@@ -126,9 +129,12 @@
   if (sum) {
     number1 = 1
     number2 = 2
+    console.log(showOperationMessage( operationSignal, number1, number2), sum(number1, number2))
+  } else {
+    console.log(showErrorMessage(operationSignal))
   }
 
-  console.log(showOperationMessage(), sum(number1, number2))
+
 
 	/*
 	Repita desde o "PASSO 2" com as operações de subtração, multiplicação,
