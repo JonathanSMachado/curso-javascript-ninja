@@ -42,9 +42,7 @@
   /*
   Mostre no console todos os livros.
   */
-  for(var i = 0; i < books.length; i++){
-    console.log(JSON.stringify(books[i]))
-  }
+  console.log(books)
 
   console.log('\nLivro que está sendo removido:');
   /*
@@ -61,23 +59,21 @@
   /*
   Converta os objetos que ficaram em `books` para strings.
   */
-// ?
+  books = JSON.stringify(books);
   console.log('\nLivros em formato string:');
 
   /*
   Mostre os livros nesse formato no console:
   */
-  var livrosStr = '';
-  for(var i = 0; i < books.length; i++){
-    livrosStr += JSON.stringify(books[i])
-  }
 
-  console.log(livrosStr)
+  console.log(books)
 
 
   /*
   Converta os livros novamente para objeto.
   */
+
+  books = JSON.parse(books)
 
   console.log('\nAgora os livros são objetos novamente:');
 
@@ -86,8 +82,10 @@
   no formato abaixo:
       "[PROPRIEDADE]: [VALOR]"
   */
-  for(var i = 0; i < books.length; i++) {
-    console.log(JSON.stringify(books[i]))
+  for (var i = 0; i < books.length; i++) {
+    for ( var prop in books[i]) {
+      console.log(prop, ':', books[i][prop])
+    }
   }
 
   /*
