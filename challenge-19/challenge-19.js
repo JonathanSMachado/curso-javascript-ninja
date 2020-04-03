@@ -29,7 +29,7 @@
     */
     console.log('Regex para números usando o construtor:');
     
-    var justNumbersRegex = /^\d+/gm;
+    var justNumbersRegex = new RegExp('^\\d+', 'gm');
     console.log( justNumbersRegex );
 
     /*
