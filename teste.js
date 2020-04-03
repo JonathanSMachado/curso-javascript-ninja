@@ -1,0 +1,1 @@
+console.log('Jonathan'.match(/n/g).length)
