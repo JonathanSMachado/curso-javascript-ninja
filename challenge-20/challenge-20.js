@@ -145,7 +145,7 @@
     */
     function isValidEmail(email) {
         console.log(email)
-        var regex = /^[\w+.]+@\w+\.\w{2,}(\.\w{2}$)?/g
+        var regex = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/g
 
         if( !email.match(regex) ) {
             return false
