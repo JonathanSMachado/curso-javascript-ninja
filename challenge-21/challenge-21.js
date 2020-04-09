@@ -19,31 +19,30 @@ dado ao elemento HTML deve definir o que o elemento é ou o que ele faz.
     'use strict';
 
     var $cronometer = document.querySelector('[data-js=cronometer]');
-    var counter = $cronometer.value;
     var timer;
 
     var startBtn = document.querySelector('[data-js=start]')
     var stopBtn = document.querySelector('[data-js=stop]')
     var resetBtn = document.querySelector('[data-js=reset]')
 
-    startBtn.addEventListener('click', function(){
-        function count() {
-            $cronometer.value = counter++;
-            timer = setTimeout(count, 1000);
-        }
+    function start() {
+        $cronometer.value = +$cronometer.value + 1;
+        timer = setTimeout(start, 1000);
+    }
 
-        count();
-    }, false)
+    function stop() {
+        clearTimeout(timer);
+    }
 
-    stopBtn.addEventListener('click', function() {
-        clearTimeout(timer)
-    }, false)
+    function reset() {
+        stop();
+        $cronometer.value = 0;
+    }
 
-    resetBtn.addEventListener('click', function() {
-        clearTimeout(timer)
-        $cronometer.value = 0
-        counter = 0
+    startBtn.addEventListener('click', start, false)
 
-    }, false)
+    stopBtn.addEventListener('click', stop, false)
+
+    resetBtn.addEventListener('click', reset, false)
 
 })();
