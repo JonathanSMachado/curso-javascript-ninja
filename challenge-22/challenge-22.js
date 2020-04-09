@@ -46,7 +46,7 @@
     console.log( arguments )
 
     return Array.prototype.reduce.call( arguments, function(acc, item) {
-      return parseInt(acc) + parseInt(item);
+      return (+acc) + (+item);
     }, 0)
   }
 
@@ -80,7 +80,7 @@
   console.log( '\nFunção que limpa entrada do usuário (somente números):' );
   
   function justNumbers(string) {
-    return string.replace(/\D+/g, '').split('')
+    return string.replace(/\D+/g, '|').split('|')
   }
 
   console.log(justNumbers.toString())
