@@ -42,17 +42,16 @@
     }
 
     function setOperationInDisplay(e) {
-        var value = e.target.dataset.value;
-        var regex = /[-+*\/]$/
+        removeLastItemIfItIsAnOperator();
+        $display.value += e.target.dataset.value;
+    }
 
-        var lastIsOperation = $display.value.match(regex);
-        
-        if ( lastIsOperation ) {
-            $display.value = $display.value.replace(regex, value);
-            return;
+    function removeLastItemIfItIsAnOperator() {
+        var regex = /[-+*\/]$/;
+
+        if ( $display.value.match(regex) ) {
+            $display.value = $display.value.replace(regex, '');
         }
-
-        $display.value += value;
     }
 
     function clearDisplay() {
@@ -60,37 +59,38 @@
     }
 
     function calculate() {
-        var valueToCalc = $display.value
+        removeLastItemIfItIsAnOperator();
+        var value = $display.value;
         var priorityOperations = /(\d+)([*\/])(\d+)/
         var otherOperations = /(\d+)([+-])(\d+)/
-
-        while( hasPendentOperation(valueToCalc) ) {
-            var match = valueToCalc.match(priorityOperations) || 
-                        valueToCalc.match(otherOperations)
+        
+        while( hasPendentOperation(value) ) {
+            var match = value.match(priorityOperations) || 
+                        value.match(otherOperations)
 
             if ( match ) {
                 switch( match[2] ) {
                     case '+':
-                        valueToCalc = valueToCalc.replace(match[0], sum(match[1], match[3]));
+                        value = value.replace(match[0], sum(match[1], match[3]));
                         break;
                     case '-':
-                        valueToCalc = valueToCalc.replace(match[0], subtraction(match[1], match[3]));
+                        value = value.replace(match[0], subtraction(match[1], match[3]));
                         break;
                     case '*':
-                        valueToCalc = valueToCalc.replace(match[0], multiply(match[1], match[3]));
+                        value = value.replace(match[0], multiply(match[1], match[3]));
                         break;
                     case '/':
-                        valueToCalc = valueToCalc.replace(match[0], division(match[1], match[3]));
+                        value = value.replace(match[0], division(match[1], match[3]));
                         break;
                 }
             }
         }
 
-        $display.value = valueToCalc;
+        $display.value = value;
     }
 
     function hasPendentOperation(value) {
-        return !!value.match(/[-+*\/]/)
+        return !!value.match(/\d+[-+*\/]/)
     }
     
     function sum(n1, n2) {
