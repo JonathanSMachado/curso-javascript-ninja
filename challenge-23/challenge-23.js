@@ -69,24 +69,31 @@
                         value.match(otherOperations)
 
             if ( match ) {
-                switch( match[2] ) {
-                    case '+':
-                        value = value.replace(match[0], sum(match[1], match[3]));
-                        break;
-                    case '-':
-                        value = value.replace(match[0], subtraction(match[1], match[3]));
-                        break;
-                    case '*':
-                        value = value.replace(match[0], multiply(match[1], match[3]));
-                        break;
-                    case '/':
-                        value = value.replace(match[0], division(match[1], match[3]));
-                        break;
-                }
+                var operator = match[2];
+                var operands = [match[1], match[3]];
+
+                value = value.replace(match[0], resolveOperation( operands, operator ));
             }
         }
 
         $display.value = value;
+    }
+
+    function resolveOperation( operands, operator ) {
+
+        switch( operator ) {
+            case '+':
+                return sum(...operands);
+            
+            case '-':
+                return subtraction(...operands);
+
+            case '*':
+                return multiply(...operands);
+
+            case '/':
+                return division(...operands);
+        }
     }
 
     function hasPendentOperation(value) {
