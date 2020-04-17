@@ -27,12 +27,20 @@
     - Ao pressionar o botão "CE", o input deve ficar zerado.
     */
 
-    var $display = document.querySelector('[data-type=display]')
-    var $numericButtons = document.querySelectorAll('[data-type=numeric]')
-    var $operationButtons = document.querySelectorAll('[data-type=operation]')
-    var $clearButton = document.querySelector('[data-type=clear]')
-    var $resultButton = document.querySelector('[data-type=calculate]')
+    var $display; 
+    var $numericButtons;
+    var $operationButtons;
+    var $clearButton;
+    var $resultButton;
 
+    function initializeGlobalVars() {
+        $display = document.querySelector('[data-type=display]')
+        $numericButtons = document.querySelectorAll('[data-type=numeric]')
+        $operationButtons = document.querySelectorAll('[data-type=operation]')
+        $clearButton = document.querySelector('[data-type=clear]')
+        $resultButton = document.querySelector('[data-type=calculate]')
+    }
+    
     function setNumberInDisplay(e) {
         if ( $display.value == 0 ) {
             $display.value = e.target.dataset.value
@@ -116,16 +124,21 @@
         return (+n2) === 0 ? 0 : (+n1) / (+n2)
     }
 
-    $numericButtons.forEach(function( btn ) {
-        btn.addEventListener('click', setNumberInDisplay, false)
-    })
+    function initializeButtonsEvents() {
+        $numericButtons.forEach(function( btn ) {
+            btn.addEventListener('click', setNumberInDisplay, false)
+        })
 
-    $operationButtons.forEach(function( btn ) {
-        btn.addEventListener('click', setOperationInDisplay, false)
-    })
+        $operationButtons.forEach(function( btn ) {
+            btn.addEventListener('click', setOperationInDisplay, false)
+        })
 
-    $clearButton.addEventListener('click', clearDisplay, false)
+        $clearButton.addEventListener('click', clearDisplay, false)
 
-    $resultButton.addEventListener('click', calculate, false)
+        $resultButton.addEventListener('click', calculate, false)
+    }
+
+    initializeGlobalVars();
+    initializeButtonsEvents();
 
 })();
