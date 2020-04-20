@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="paragraph" class="paragraph">Texto</p>
+    <p class="paragraph" data-js="p">Texto 2</p>
+
+    <script src="DOM.js"></script>
+    <script>
+
+        var $elements = new DOM('.paragraph')
+        
+        var newElements = $elements.some(function(el) {
+            return el.hasAttribute('id')
+        })
+        
+        console.log(newElements)
+
+    </script>
+</body>
+</html>
