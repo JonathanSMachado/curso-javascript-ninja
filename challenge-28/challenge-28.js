@@ -1,3 +1,6 @@
+(function(){
+  'use strict';
+
   /*
   No HTML:
   - Crie um formulário com um input de texto que receberá um CEP e um botão
@@ -25,3 +28,98 @@
   - Utilize a lib DOM criada anteriormente para facilitar a manipulação e
   adicionar as informações em tela.
   */
+
+  var $form;
+  var $cep;
+  var xhr;
+
+  var $logradouro
+  var $estado
+  var $cidade
+  var $bairro
+  var $cepField
+
+  function cepSanitize() {
+    return $cep.get()[0].value.replace(/\D+/, '')
+  }
+
+  function replaceCepInString(string) {
+    return string.replace('[CEP]', cepSanitize())
+  }
+
+  function getMessage(key) {
+    var messages = {
+      'ok': replaceCepInString('Endereço referente ao CEP [CEP]:\n'),
+      'error': replaceCepInString('Nao encontramos o endereço para o CEP [CEP].'),
+      'loading': replaceCepInString('Buscando informaçoes para o CEP [CEP]'),
+    }
+
+    return messages[key]
+  }
+
+  function formSubmit(event) {
+    event.preventDefault()
+    xhr.set
+    xhr.open(
+      'GET', 
+      replaceCepInString('https://cors-anywhere.herokuapp.com/http://apps.widenet.com.br/busca-cep/api/cep.json?code=[CEP]')
+    )
+    xhr.send(null)
+    getMessage('loading')
+  }
+
+  function handleRepsonse() {
+    if( isRequestOK() ) {
+      getMessage('ok')
+
+      try {
+        fillDataOnFields(JSON.parse(xhr.responseText))
+      } catch (e) {
+        getMessage('error')
+        clearAllFields()
+      }
+    }
+  }
+
+  function clearAllFields() {
+    var $inputs = document.querySelectorAll('.info input')
+
+    $inputs.forEach(function(input){
+      input.textContent = ''
+    })
+  }
+
+  function fillDataOnFields(data) {
+    $bairro.get()[0].textContent = data.bairro
+    $cidade.get()[0].textContent = data.cidade
+    $estado.get()[0].textContent = data.estado
+    $logradouro.get()[0].textContent = data.logradouro
+    $cepField.get()[0].textContent = data.cep
+
+  }
+
+  function isRequestOK() {
+    return xhr.readyState === 4 && xhr.status === 200
+  }
+
+  function initEvents() {
+    $form.get()[0].addEventListener('submit', formSubmit, false)
+    xhr.addEventListener('readystatechange', handleRepsonse, false)
+  }
+
+  function initVariables() {
+    $form = new DOM('form')
+    $cep = new DOM('input[name="cep"]')
+    xhr = new XMLHttpRequest()
+
+    $bairro = new DOM('[data-js="bairro"]')
+    $estado = new DOM('[data-js="estado"]')
+    $cidade = new DOM('[data-js="cidade"]')
+    $logradouro = new DOM('[data-js="logradouro"]')
+    $cepField = new DOM('[data-js="cep"]')
+    initEvents()
+  }
+
+  initVariables()
+
+})()
