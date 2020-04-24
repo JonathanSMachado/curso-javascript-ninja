@@ -36,4 +36,85 @@
   que será nomeado de "app".
   */
 
+  function app() {
+    var $empresa = new DOM('[data-js="empresa"]');
+    var $telefone = new DOM('[data-js="fone"]');
+    var $form = new DOM('form');
+    var $imagem = new DOM('[name="image"]');
+    var $modelo = new DOM('[name="modelo"]');
+    var $ano = new DOM('[name="ano"]');
+    var $cor = new DOM('[name="cor"]');
+    var $table = new DOM('table');
+
+    var xhr = new XMLHttpRequest();
+
+    function loadCompanyData() {
+      xhr.open('GET', '/challenge-29/company.json');
+      xhr.send();
+      xhr.addEventListener('readystatechange', populateCompanyFields, false);
+    }
+
+    function populateCompanyFields() {
+      if ( isRequestOk() ) {
+        var data = parseData();
+        $empresa.get()[0].textContent = data.name;
+        $telefone.get()[0].textContent = data.phone;
+      }
+    }
+
+    function parseData() {
+      var result;
+      try {
+        result = JSON.parse(xhr.responseText);
+      } catch(e) {
+        result = null;
+      }
+
+      return result;
+    }
+
+    function isRequestOk() {
+      return xhr.readyState === 4 && xhr.status === 200;
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      
+      var data = {
+        imagem: $imagem.get()[0].value,
+        modelo: $modelo.get()[0].value,
+        ano: $ano.get()[0].value,
+        cor: $cor.get()[0].value
+      }
+
+      addItemInTable(data)
+    }
+
+    function addItemInTable(data) {
+      var tableLine = document.createElement('tr');
+
+      for ( var prop in data ) {
+        var tableColumn = document.createElement('td')
+        tableColumn.append( data[prop] )
+        tableLine.appendChild(tableColumn);
+      }
+
+      $table.get()[0].appendChild(tableLine);
+    }
+
+    function initEvents() {
+      $form.on('submit', submitForm);
+    }
+
+    function init() {
+      loadCompanyData();
+      initEvents();
+    }
+
+    init();
+
+  }
+
+  app();
+
 })();
